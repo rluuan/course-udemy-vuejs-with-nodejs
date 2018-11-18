@@ -1,8 +1,8 @@
 <template>
     <div class="contain">
         <div class="slider">
-            <h3>Acao</h3>
-            <span class="handle handlePrev active">
+            <teste titulo='Categoria'></teste>
+            <span v-on:mouseover="scrollEsquerda()" v-on:onmouseout="clearScroll()" class="handle handlePrev active">
                 <i class="fa fa-caret-left" aria-hidden="true"></i>
             </span>
             <div id="scroller" class="row">
@@ -80,7 +80,7 @@
             </div>
         </div>
 
-        <span onmouseover="scrollDireita()" onmouseout="clearScroll()"  class="handle handleNext active">
+        <span v-on:mouseover="scrollDireita()" v-on:onmouseout="clearScroll()"  class="handle handleNext active">
             <i class="fa fa-caret-right" aria-hidden="true"></i>
         </span>
     </div>
@@ -88,13 +88,30 @@
 </template>
 
 <script>
+    import teste from './components/teste.vue'
     export default {
         name: 'app',
+        components: {
+          teste
+        },
         data () {
             return {
                 msg: 'Welcome to Your Vue.js App RLUAN',
-                nameProject: 'Netflix with vue js'
+                nameProject: 'Netflix with vue js',
+                intervalo: null
             }
+        },
+        methods: {
+          scrollDireita () {
+            this.intervalo = setInterval(function(){ document.getElementById('scroller').scrollLeft += 1 }  , 5);
+          },
+          scrollEsquerda () {
+            this.scrollLeft = (this.scrollLeft < 0) ? 0 : (this.scrollLeft - 1);
+            this.intervalo = setInterval(function () { document.getElementById('scroller').scrollLeft -= 1}, 5);
+          },
+          clearScroll () {
+            clearInterval(this.intervalo);
+          }
         }
     }
 </script>
